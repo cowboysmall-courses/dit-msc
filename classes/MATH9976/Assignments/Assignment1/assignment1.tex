@@ -1,0 +1,266 @@
+\documentclass{report}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{titlepic}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\setlength\parindent{0pt}
+\graphicspath{{./images/}}
+
+\renewcommand{\baselinestretch}{1.5}
+
+
+
+
+
+
+
+\begin{document}
+
+\titlepic{\includegraphics[scale=0.5]{DIT_logocol}}
+\title{The Weighted Random Graph Model}
+\author{Jerry Kiely\\
+	\\
+	School of Mathematical Sciences\\
+	Dublin Institute of Technology\\
+	Dublin 8\\
+	Ireland\\
+	\\
+	\texttt{d16126734@mydit.ie}}
+\date{\today}
+\maketitle
+
+
+\tableofcontents
+
+\newpage
+
+
+
+
+
+
+
+
+
+
+\begin{abstract}
+The author introduced the weighted random graph (WRG) model, which represents "the weighted counter-part 
+of the Erdos-R\'{e}nyi random graph model", and which provides "fundamental insights into more complicated 
+weighted networks". 
+\end{abstract}
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Background}
+
+A graph $G(V, E)$ may be considered a collection of vertices and edges. The vertices, or the nodes, are 
+the things we are modelling - computers, people, towns, etc. The edges are the relationships between the 
+things we are modelling - network cables, relationships, roads, etc. \bigskip
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale = 0.5]{random}
+	\caption{A Random Graph}
+	\label{fig:random}
+\end{figure}\medskip
+
+A graph can be \textit{directed} or \textit{undirected}. For example, in an undirected graph representing 
+a network, two nodes $a$ and $b$ (representing computers) connected by an edge (a network cable) can be 
+represented by an unordered pair $\{a, b\}$ - unordered because the connection goes in both directions. In 
+a directed graph representing the world wide web, two nodes $a$ and $b$ (representing pages) connected by 
+and edge (a hyperlink) can be represented by an ordered pair $(a, b)$ - ordered because the connection 
+goes in one direction. \bigskip
+
+Also a graph can be weighted or unweighted - where edges between vertices can have an associated weight. 
+For example, in a graph representing towns in a country, two nodes $a$ and $b$ representing towns would 
+have an edge $\{a, b\}$ with an associated weight representing the distance between the two towns. \bigskip
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Methods}
+
+
+When we talk about \textit{Random Graphs} (\cite{book1, article1}) we refer to probability distributions on 
+graphs. These graphs can be directed, undirected, weighted, unweighted, etc. Generating ramdom graphs can 
+be done in a number of different ways. For example: \bigskip
+
+\begin{itemize}
+	\item fix the number of nodes $n$ and the number of edges $m$
+	\item number the nodes $1$ to $n$
+	\item select two nodes at random forming an edge
+	\item continue $m$ times 
+\end{itemize}\medskip
+
+another approach: \bigskip
+
+\begin{itemize}
+	\item fix the number of nodes $n$ and a probability threshold $p$
+	\item number the nodes $1$ to $n$
+	\item for each pair of nodes generate a random number
+	\item form an edge if the random number is greater than $p$ 
+\end{itemize}\medskip
+
+There are many statistics of interest around random graphs: \bigskip
+
+\begin{itemize}
+	\item the degree distribution of the vertices (popularity, centre)
+	\item the number of edges (relationships)
+	\item the number of sub-graphs (triangles, etc.)
+	\item the number of connected components
+\end{itemize}\medskip
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Results}
+
+Draw an edge between two nodes with weight $w$ with probability: \bigskip
+
+\[
+	q_{ij}(w) = (y_1 y_j)^w (1 - y_1 y_j)
+\]\medskip
+
+making a few assumptions we can generalise this as: \bigskip
+
+\[
+	q(w) = p^w (1 - p)
+\]\medskip
+
+it is easy to show that the likelihood maximising choice is: \bigskip
+
+\[
+	p^* = \frac{2W}{N(N - 1) + 2W}
+\]\medskip
+
+the expected weight of any edge (\cite{article2}) is: \bigskip
+
+\[
+	\langle w \rangle = \sum_{w = 0}^{+\infty} q(w) w = \frac{p}{1 - p}
+\]\medskip
+
+the variance is: \bigskip
+
+\[
+	\langle w^2 \rangle - \langle w \rangle^2 = \frac{p}{(1 - p)^2}
+\]\medskip
+
+the degree distribution of the whole network is: \bigskip
+
+\[
+	P(k) = \binom{N - 1}{k} p^k (1 - p)^{N - 1 - k}
+\]\medskip
+
+the strength distribution is: \bigskip
+
+\[
+	P(s) = \binom{N - 2 + s}{N - 2} p^s (1 - p)^{N - 1}
+\]\medskip
+
+If all edges with weight smaller than $w$ are removed, it is clear that the remaining edges form an 
+unweighted projection equivalent to an ER random graph with probability: \bigskip
+
+\[
+	p_{w}^{+} \equiv \sum_{v = w}^{+\infty} q(v) = p^w
+\]\medskip
+
+similarly, if all edges greater than $w$ are removed, we have: \bigskip
+
+\[
+	p_{w}^{-} \equiv \sum_{v = 1}^{w} q(v) = p - p^{w + 1}
+\]\medskip
+
+and so on. The Critical weight: \bigskip
+
+\[
+	w_{c}^{+} \equiv - \frac{\ln{N}}{\ln{p}}
+\]\medskip
+
+removing edges of weight greater than or equal to $w_{c}^{+}$ the network will fragment. \bigskip
+
+\[
+	\lim_{N \to \infty} w_{c}^{+} = \frac{1}{\alpha} \qquad \text{ if } \qquad p \sim N^{- \alpha}
+\]\medskip
+
+for strong link removal the critical weight is: \bigskip
+
+\[
+	w_{c}^{+} \equiv - \frac{\ln{(p - 1/N)}}{\ln{p}} - 1 \simeq 0
+\]\medskip
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Comments}
+
+The study of random graphs has many applications. For example, the study of the passage of infectious 
+diseases can be helped by the study of random graphs - modelling with a random graph may be the only 
+possibility when the actual graph is not known in advance, or where the actual graph may change 
+regularly. \bigskip
+
+Also, when studying a graph, by comparing it to known properties of a random graph we can easily decide 
+if an observed property is worth studying - in other words, if an observed property of a graph is present 
+within a random graph, then it is likely not anomalous, and does not warrant further research. \bigskip
+
+Weighted random graphs provide a more complete description of graphs used to model many different 
+phenomena, and arise naturally when describing networks that model transport for example. \bigskip
+
+
+\newpage
+
+
+
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{bibtex/bibliography}
+
+\end{document}

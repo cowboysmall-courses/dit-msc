@@ -1,0 +1,322 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Sample examination layout for 		       	%%%%%
+%%%%%          dit_maths_exam.sty 			%%%%%
+%%%%%							%%%%%
+%%%%%	V3 September 2015    				%%%%%
+%%%%%	- Use new sty file to mirror CoSH template 	%%%%%
+%%%%%   - include bw option for black & white logo      %%%%%
+%%%%%	- instructions on new programmes		%%%%%
+%%%%%							%%%%%
+%%%%%	V2.1 October 2014    				%%%%%
+%%%%%	- Fix bug using old sty file naming convention 	%%%%%
+%%%%%							%%%%%
+%%%%%	V2 October 2014    				%%%%%
+%%%%%	- Remove reference to Springboard programmes 	%%%%%
+%%%%%	- included new external examiners		%%%%%
+%%%%%							%%%%%
+%%%%%	V1.1 October 2013    				%%%%%
+%%%%%	- New external examiner instruction included	%%%%%
+%%%%%	- Two new rubrics: DT205/DT220/1 Programming	%%%%%
+%%%%%							%%%%%
+%%%%%	V1 February 2013    				%%%%%
+%%%%%	- Original version				%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,12pt]{article}
+
+	%\usepackage{amsmath,color,graphicx,epstopdf,wrapfig,enumerate}
+	\usepackage{amsmath,enumerate,graphics,graphicx,color,amsthm}
+	%\usepackage{venturis2}
+	%\usepackage[T1]{fontenc}
+	\usepackage[adobe-utopia]{mathdesign}
+	\usepackage[T1]{fontenc}
+	\usepackage{enumitem}
+	\newcommand{\lqs}{\leqslant}
+	\newcommand{\gqs}{\geqslant}
+	\newcommand{\R}{\mathbb{R}}
+	\definecolor{gray}{RGB}{128,128,128}
+	\definecolor{lime}{RGB}{153,204,0}
+	\newtheoremstyle{Qstyle}{}{20pt}{}{}{\bfseries}{:\quad}{ }{}
+	\theoremstyle{Qstyle}
+	\newtheorem{q}{Q\hspace{-2pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% 	ENSURE LATEST VERSION OF STYLE IS USED HERE	%%%%%
+%%%%%   ---use option argument bw to use b&w logo       %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage{dit_maths_exam_V3}		%use for color logo
+\usepackage[bw]{dit_maths_exam_V3}	%use for bw logo
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% include optional packages here 		       	%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% include local command definitions here	       	%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter examination code from timetable	   	%%%%%
+%%%%% ---ensure all concurrent exams are included---	%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\code}{W260/322}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter module title including module code 	       	%%%%%
+%%%%% ---format: MATH XXXX: Title of Module		%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\mtitle}{MATH9973: Numerical Methods for Differential Equations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter all programmes 				%%%%%
+%%%%% ---separate with \\[10pt] & use the definitions:	%%%%%
+%%%%%		\dt{205} \dt{220} 			%%%%%
+%%%%%		\dt{6248} \dt{7248} \dt{8248} 		%%%%%
+%%%%%		\dt{8998}				%%%%%
+%%%%%		\dt{9205} (includes DT9206)		%%%%%
+%%%%%		\dt{9209} (includes DT9210)		%%%%%
+%%%%%		\dt{9211} (includes DT9212)		%%%%%
+%%%%%[only for legacy/repeat students 2015/2016] 	%%%%%
+%%%%%		\dt{234} \dt{238} 			%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\progs}{\dt{9205} \\[10pt] } 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter stage number		 	       	%%%%%
+%%%%%  	- use second definition if no stage  		%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\stage}{Stage 1} 	%comment if no stage
+\renewcommand{\stage}{\vspace{-0.25in}}	%comment if stage exists
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter examination session	& ACADEMIC year		%%%%%
+%%%%% ---use following definitions:			%%%%%
+%%%%%		\winter \summer \autumn			%%%%%
+%%%%% ---use format YYYY/YYYY				%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\session}{\autumn}
+\renewcommand{\acyear}{2015/2016}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter examiners					%%%%%
+%%%%% ---use following definitions:			%%%%%
+%%%%%		\appleby \murphy \riordan \tuite	%%%%%
+%%%%% Head of School will be included automatically	%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\examiner}{Dr. John S. Butler}
+\renewcommand{\external}{\riordan}  	%comment if no external
+%\renewcommand{\external}{ } 		%comment if external exists
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% enter date time					%%%%%
+%%%%% ---use following formats:				%%%%%
+%%%%%	Thursday, 22 August 2014	2.00 -- 4.00 pm	%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\exdate}{}
+\renewcommand{\extime}{}
+%\newcommand{\duration}{2 hours}
+%\newcommand{\duration}{3 hours}
+\newcommand{\duration}{2 hour}
+	\newcommand*{\Comb}[2]{{}^{#1}C_{#2}}%
+	\newcommand*{\Pick}[2]{{}^{#1}P_{#2}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% rubrics: comment/uncomment as necessary		%%%%%
+%%%%% ---there are two rubric lines rubrica & rubricb	%%%%%
+%%%%% ---use standard wordings given			%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\rubrica}{Attempt three questions only}
+\renewcommand{\rubrica}{Full marks may be obtained by answering three questions.  Candidate's three best questions will contribute to their final mark.}
+%\renewcommand{\rubrica}{Attempt all qustions}
+%\renewcommand{\rubrica}{Attempt question 1 and any two other questions}
+%\renewcommand{\rubrica}{Answer four questions}
+%\renewcommand{\rubrica}{Attempt question 1 and any three other questions}
+\renewcommand{\rubricb}{All questions carry equal marks}
+%\renewcommand{\rubricb}{Answer at least two questions from each section.  All questions carrry equal marks}
+%\renewcommand{\rubricb}{Question 1 carries 40 marks.  All other questions carry 20 marks each.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% comment out those that are not permitted		%%%%%
+%%%%% PLEASE ONLY INCLUDE ITEMS THAT ARE NECESSARY 	%%%%%
+%%%%% AND APPROPRIATE					%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\calculators	%comment out if not permitted
+\tables		%comment out if Mathematical tables not to be provided
+%\stats		%comment out if New Cambridge Statistical Tables not to be provided
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+\makecover
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% place questions in the question environment	%%%%%
+%%%%% 	\begin{question}{total marks} ...\end{question}	%%%%%
+%%%%% use \begin{enumerate} for sub(sub)sections	%%%%%
+%%%%% use \mrk{**} for mark allocations within question	%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%?%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+
+\begin{question}{33}
+
+\begin{enumerate}
+	\item
+	Derive the Euler approximation show it has a local truncation error of $O(h)$ of the Ordinary Differential Equation
+	\[y^{'}(x)=f(x,y) \]
+	with initial condition
+	\[y(a)=\alpha. \]
+	\mrk{7}
+	\item 
+	Suppose $f$ is a continuous and satisfies a Lipschitz condition with constant
+	L on $D=\{(t,y)|a\leq t \leq b, -\infty < y < \infty \}$ and that a constant M
+	exists with the property that 
+	\[ |y^{''}(t)|\leq M. \]
+	Let $y(t)$ denote the unique solution of the IVP
+	\[ y^{'}=f(t,y) \ \ \ a\leq t \leq b \ \ \ y(a)=\alpha \]
+	and $w_0,w_1,...,w_N$ be the approx generated by the Euler method for some
+	positive integer N.  Then show for $i=0,1,...,N$
+	\[ |y(t_i)-w_i| \leq \frac{Mh}{2L}|e^{L(t_i-a)}-1| \]
+	You may assume the two lemmas:\\
+	If s and t are positive real numbers $\{a_i\}_{i=0}^{N}$ is a sequence satisfying $a_0 \geq \frac{-t}{s}$ and $a_{i+1} \leq (1+s)a_i +t $
+	then
+	\[a_{i+1} \leq e^{(i+1)s}\left(a_0+\frac{t}{s}\right)-\frac{t}{s} \]
+	
+	For all $ x \geq 0.1$ and any positive m we have \[0\leq (1+x)^m \leq e^{mx}\]
+	\mrk{14}
+	\item
+	Use the shooting method combined with the Euler's method to estimate the solution of
+	\[ y^{''}-y=2x, \ \ \ y(0)=-2 y(1)=-0.9 \]
+	at x=1, using $h=0.25$.
+	\mrk{12}
+\end{enumerate}
+
+\end{question}
+
+\begin{question}{33}
+	\begin{enumerate}
+		\item
+		Derive the Adams Bashforth two step method and its truncation error which is of the form
+		\[w_0=\alpha_0 \ \ \ w_1=\alpha_1 \]
+		\[w_{i+1}=w_i + \frac{h}{2}[3f(t_i,w_i)-f(t_{i-1},w_{i=1})] \]
+		\mrk{10}
+		\item
+		Define the terms consistent and convergent methods for a multistep method.
+		\mrk{5}
+		\item
+		Define the terms strongly stable, weakly stable and unstable with respect to the
+		characteristic equation.
+		\mrk{6}
+		\item
+		Show that the Adams Bashforth two step method is  stongly stable.
+		\mrk{6}
+		\item
+		Use an Adams-Basforth method of your choice to approximate the solution to the initial value problem.
+		\[y^{'}=1+(t-y)^2, \ \  2\leq t \leq 3,  \ \ \ y(2) = 1 \]
+		with $h=0.2$.
+		\mrk{7}
+		\end{enumerate}
+\end{question}
+
+\begin{question}{33}
+	\begin{enumerate}
+		\item
+		Approximate the Poisson equation 
+		\[ -\nabla^2U(x,y)=f(x,y) \ \ \ \ \ \ (x,y) \in \Omega=(0,1)\times (0,1) \]
+		with boundary conditions
+		\[U(x,y) = g(x,y) \ \ \ \ \ \ \ \  (x,y)\in\delta\Omega-boundary \]
+		using the five point method.  Sketch how the finite difference scheme may be 
+		rewritten in the form $Ax=b$, where A is a sparse
+		$N^2\times N^2$ matrix, $b$ is an $N^2$ component matrix and $x$ is an $N^2$
+		component vector of unknowns.
+		(Assume your 2d discretised grid contains $N$ components in the $x$ and $y$ direction).
+		%with boundary conditions
+		%\[ u(0,t)=u(\pi,t)=0, \ \ 0<t \]
+		%and initial conditions
+		\mrk{8}
+		%\item
+		%Prove that the five-point difference analog $-\nabla^2_h$ is consistent to order 2 with $-\nabla^2$.
+		
+		\item Prove (DISCRETE MAXIMUM PRINCIPLE).
+		if $\nabla^2_hV_{ij}\geq 0$ for all points $(x_i,y_j) \in \Omega_h$, then
+		\[ \max_{(x_i,y_j)\in\Omega_h}V_{ij}\leq  \max_{(x_i,y_j)\in\partial\Omega_h}V_{ij}\]
+		If $\nabla^2_hV_{ij}\leq 0$ for all points $(x_i,y_j) \in \Omega_h$, then
+		\[ \min_{(x_i,y_j)\in\Omega_h}V_{ij}\geq  \min_{(x_i,y_j)\in\partial\Omega_h}V_{ij}\]
+\mrk{14}
+		\item
+		Hence prove:\\
+		Let $U$ be a solution to the Poisson equation and let $w$ be the grid function
+		that satisfies the discrete analog
+		\[-\nabla_h^2w_{ij}=f_{ij} \ \ \mbox{ for } (x_i,y_j)\in\Omega_h, \]
+		\[w_{ij}=g_{ij} \ \ \mbox{ for } (x_i,y_j)\in\partial\Omega_h. \]
+		Then there exists a positive constant $K$ such that
+		\[||U-w||_{\Omega}\leq KMh^2 \]
+		where
+		\[ M=\left\{
+		\left|\left|\frac{\partial^4 U}{\partial x^4} \right|\right|_{\infty},
+		\left|\left|\frac{\partial^4 U}{\partial x^3\partial y} \right|\right|_{\infty},
+		,...,
+		\left|\left|\frac{\partial^4 U}{\partial y^4} \right|\right|_{\infty}
+		\right\}
+		\]
+		You may assume:\\
+		\textbf{Lemma}\\
+		If the grid function $V:\Omega_h\bigcup\partial\Omega_h\rightarrow R$ satisfies the boundary condition $V_{ij}=0$ for $(x_i,y_j)\in \partial\Omega_h$, then
+		\[||V||_{\Omega}\leq \frac{1}{8}||\nabla_h^2V||_{\Omega} \]
+	\mrk{11}
+		\end{enumerate}
+	
+\end{question}
+
+\begin{question}{33}
+	
+	Consider the second order differential equation 
+	\[\frac{d^2u}{dx^2}+u=x \ \]
+	with boundary conditions
+	\[u(0)=0 \ \ \ \ \ u(1)=0 \]
+	\begin{enumerate}
+		\item
+		Show that the solution $u(x)$ of this equation satisfies the weak form
+		\[ \int_{0}^{1} dx \left(-\frac{du}{dx}\frac{dv}{dx}+uv-xv \right) = 0\]
+		for all $v(x)$ which are sufficiently smooth and which satisfy
+		\[v(0)=0 \ \ \ \ \ v(1)=0 \]
+		\mrk{13}
+		\item
+		By splitting the interval $x\in [0,1]$ into $N$ equal elements of size $h$, where
+		$Nh=1$, one can define nodes $x_i$ and finite element shape functions as 
+		follows
+		\[x_i=ih \]
+		\[\phi_i(x)=\left\{\begin{array}{ll} 
+		0 & 0\leq x \leq x_{i-1}\\
+		\frac{x-x_{i-1}}{h} & x_{i-1}\leq x \leq x_{i}\\
+		\frac{x_{i+1}-x}{h} & x_{i}\leq x \leq x_{i+1}\\
+		0 & x_{i+1}\leq x \leq 1\\
+		\end{array} \right. \]
+		A finite element approximation to the differential equation is obtained by approximating $u(x)$ and $v(x)$ with linear combinations of these finite element shape
+		functions, $\phi_i$, where
+		\[ u_{n} = \sum_{i=1}^{N-1}\alpha_i \phi_i(x) \]
+		\[ v_{n} = \sum_{j=1}^{N-1}\beta_j \phi_j(x) \]
+		Show that the equation which results from this approximation has the form
+		\[K\alpha= F \]
+		where K is an $N-1 \times N-1$ sparse matrix, $F$ is an $N-1$ component vector
+		and $\alpha$ is an $N-1$ component vector of unknown co-efficient $\alpha_i$.
+		\mrk{14}
+		\item
+		What structure does the matrix $K$ have?
+		Evaluate the first component of the main diagonal of $K$.
+		\mrk{8}
+\end{enumerate}
+	
+\end{question}
+
+
+\end{enumerate}
+
+\end{document}

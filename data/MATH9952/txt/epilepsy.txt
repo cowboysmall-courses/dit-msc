@@ -1,0 +1,23 @@
+"Subject","treatment","Time ","Attacks"
+1,"active",12,3
+2,"active",5,2
+3,"active",7,4
+4,"active",14,3
+5,"active",10,5
+6,"active",10,2
+7,"active",12,1
+8,"active",8,3
+9,"active",11,3
+10,"active",8,3
+11,"placebo",11,4
+12,"placebo",11,7
+13,"placebo",8,6
+14,"placebo",16,8
+15,"placebo",11,11
+16,"placebo",7,8
+17,"placebo",15,7
+18,"placebo",9,7
+19,"placebo",7,4
+20,"placebo",4,2
+21,"placebo",6,6
+22,"placebo",4,1

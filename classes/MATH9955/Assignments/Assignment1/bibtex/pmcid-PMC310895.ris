@@ -1,0 +1,22 @@
+TY  - JOUR
+DB  - PMC
+AU  - Roach, Jared C
+AU  - Thorsson, Vesteinn
+AU  - Siegel, Andrew F
+T1  - Parking Strategies for Genome Sequencing
+SN  - 1088-9051
+Y1  - 2000/07/
+PY  - 2000/02/02/received
+PY  - 2000/05/10/accepted
+AB  - The parking strategy is an iterative approach to DNA sequencing. Each iteration consists of sequencing a novel portion of target DNA that does not overlap any previously sequenced region. Subject to the constraint of no overlap, each new region is chosen randomly. A parking strategy is often ideal in the early stages of a project for rapidly generating unique data. As a project progresses, parking becomes progressively more expensive and eventually prohibitive. We present a mathematical model with a generalization to allow for overlaps. This model predicts multiple parameters, including progress, costs, and the distribution of gap sizes left by a parking strategy. The highly fragmented nature of the gaps left after an initial parking strategy may make it difficult to finish a project efficiently. Therefore, in addition to our parking model, we model gap closing by walking. Our gap-closing model is generalizable to many other strategies. Our discussion includes modified parking strategies and hybrids with other strategies. A hybrid parking strategy has been employed for portions of the Human Genome Project. 
+SP  - 1020
+EP  - 1030
+VL  - 10
+IS  - 7
+AN  - PMC310895
+UR  - http://www.ncbi.nlm.nih.gov/pmc/articles/PMC310895/
+U1  - 10899151[pmid]
+J1  - Genome Res
+JF  - Genome Research
+PB  - Cold Spring Harbor Laboratory Press
+ER  - 

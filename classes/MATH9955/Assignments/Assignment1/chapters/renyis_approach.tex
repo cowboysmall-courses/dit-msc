@@ -1,0 +1,220 @@
+
+\chapter{R\'enyi's Approach}
+
+
+
+
+
+
+
+
+
+
+
+\section{Solution of the Delay Differential Equation}
+
+A more satisfying approach is R\'enyi's solution to the delay differential equation derived 
+from the master equation (see \cite{yoshiaki2011random}). We start with the familiar form: \bigskip
+
+\begin{eqnarray} \label{eq:0}
+	M(x + 1) = 1 + \frac{2}{x} \int_{0}^{x} M(t) dt
+\end{eqnarray}\medskip
+
+then multiply both sides by $x$: \bigskip
+
+\[
+	x M(x + 1) = x + 2 \int_{0}^{x} M(t) dt
+\]\medskip
+
+and differentiate the result with respect to x: \bigskip
+
+\begin{eqnarray} \label{eq:7}
+	x M^{\prime}(x + 1) + M(x + 1) = 1 + 2 M(x) \quad \text{for} \quad x > 0
+\end{eqnarray}\medskip
+
+We now consider the following: \bigskip
+
+\begin{eqnarray} \label{eq:8}
+	\varphi(s) = \int_{0}^{\infty} M(x) e^{-sx} dx
+\end{eqnarray}\medskip
+
+which is the Laplace transform of $M(x)$. We will show that $\varphi(s)$ takes the form: \bigskip
+
+\begin{eqnarray} \label{eq:9}
+	\varphi(s) = \frac{e^{-s}}{s^2} \int_{s}^{\infty} \exp \left( -2 \int_{s}^{t} \frac{1 - e^{-u}}{u} du \right) dt
+\end{eqnarray}\medskip
+
+Returning to equation \ref{eq:7} with the initial condition: \bigskip
+
+\[
+	M(x) = 0 \quad \text{for} \quad 0 \leq x < 1
+\]\medskip
+
+we multiply across by $e^{-sx}$ and integrating: \bigskip
+
+\begin{eqnarray*}
+	\int_{0}^{\infty} x M^{\prime}(x + 1) e^{-sx} dx + \int_{0}^{\infty} M(x + 1) e^{-sx} dx & = & \int_{0}^{\infty} e^{-sx} dx + \int_{0}^{\infty} 2 M(x) e^{-sx} dx \\\\
+																							 & = & \left. -\frac{ e^{-sx}}{s} \right|_{x = 0}^{\infty} + 2 \int_{0}^{\infty} M(x) e^{-sx} dx \\\\
+																							 & = & \frac{1}{s} + 2 \varphi(s) 
+\end{eqnarray*}\medskip
+
+We take each part of the left hand side separately: \bigskip
+
+\begin{eqnarray*}
+	\int_{0}^{\infty} M(x + 1) e^{-sx} dx & = & \int_{1}^{\infty} M(t) e^{-s(t - 1)} dt \\\\
+										  & = & e^{s} \int_{1}^{\infty} M(t) e^{-st} dt \\\\
+										  & = & e^{s} \varphi(s) 
+\end{eqnarray*}\medskip
+
+making use of our initial condition. Looking at the other integral, and integrating by parts: \bigskip
+
+\begin{eqnarray*}
+	\int_{0}^{\infty} x M^{\prime}(x + 1) e^{-sx} dx & = & - \frac{d}{ds} \left( \int_{0}^{\infty} M^{\prime}(x + 1) e^{-sx} dx \right) \\\\
+													 & = & - \frac{d}{ds} \left( \left. M(x + 1) e^{-sx} \right|_{x = 0}^{\infty} + s \int_{0}^{\infty} M(x + 1) e^{-sx} dx \right) \\\\
+													 & = & - \frac{d}{ds} \left( - M(1) + s e^{s} \varphi(s) \right) \\\\
+													 & = & - \frac{d}{ds} \left( s e^{s} \varphi(s) \right) 
+\end{eqnarray*}\medskip
+
+so our delay differential equation becomes: \bigskip
+
+\begin{eqnarray*}
+	- \frac{d}{ds} \left( s e^{s} \varphi(s) \right) + e^{s} \varphi(s) & = & \frac{1}{s} + 2 \varphi(s) \\\\
+					   - \frac{d}{ds} \left( s e^{s} \varphi(s) \right) & = & \frac{1}{s} + 2 \varphi(s) - e^{s} \varphi(s) \\\\
+						 \frac{d}{ds} \left( s e^{s} \varphi(s) \right) & = & \varphi(s) ( e^{s} - 2 ) - \frac{1}{s}
+\end{eqnarray*}\medskip
+
+we now make the substitution $w(s) = e^{s} \varphi(s)$. Our equation becomes: \bigskip
+
+\begin{eqnarray*}
+	\frac{d}{ds} \left( s w(s) \right) & = & w(s) ( 1 - 2 e^{-s}) - \frac{1}{s} \\\\
+				w(s) + s w^{\prime}(s) & = & w(s) - 2 w(s) e^{-s} - \frac{1}{s} \\\\
+					   s w^{\prime}(s) & = & - 2 w(s) e^{-s} - \frac{1}{s} 
+\end{eqnarray*}\medskip
+
+%now we once again make use of the fact that $0 \leq M(x) \leq x$ and find that: \bigskip
+%
+%\begin{eqnarray*}
+%	\varphi(s) &    = & \int_{0}^{\infty} M(x) e^{-sx} dx \\\\
+%			   & \leq & \int_{0}^{\infty} x e^{-sx} dx \\\\
+%			   & \leq & e^{-s} \left( \frac{1}{s} + \frac{1}{s^2} \right)
+%\end{eqnarray*}\medskip
+
+solving this inhomogeneous equation gives us: \bigskip
+
+\[
+	w(s) = \frac{1}{s^2} \int_{s}^{\infty} \exp \left( -2 \int_{s}^{t} \frac{1 - e^{-u}}{u} du \right) dt
+\]\medskip
+
+which is another form of equation \ref{eq:9}.
+
+
+
+
+
+
+
+
+
+
+\section{The Computation of the Limit}
+
+R\'enyi provides the following theorem: \bigskip 
+
+\begin{theorem}
+	One has the limit
+	\[
+		\lim_{x \to \infty} \frac{M(x)}{x} = C_R
+	\]
+	with
+	\[
+		C_R = \int_{0}^{\infty} \exp \left( -2 \int_{0}^{t} \frac{1 - e^{-u}}{u} du \right) dt
+	\]
+\end{theorem}\bigskip
+
+In order to compute the limit, R\'enyi makes use of the following 
+\emph{Tauberian theorem} (stated without proof):\bigskip
+
+\begin{mdframed}
+	\begin{theorem}
+		if $f$ is positive and integrable over every finite interval $(0, T)$ and $e^{-st}f(t)$ is integrable 
+		over $(0, \infty)$ for any $s > 0$ and if \bigskip
+		\[
+			g(s) = \int_{0}^{\infty} e^{-st} f(t) dt \simeq H s^{-\beta} \text{ as } s \to 0
+		\]\medskip
+		where $\beta > 0$ and $H > 0$ then when $x \to \infty$, we have \bigskip
+		\[
+			F(x) = \int_{0}^{x} f(t) dt \simeq \frac{H}{\Gamma(1 + \beta)}  x^{\beta} \text{ as } x \to \infty
+		\]\medskip
+	\end{theorem}
+\end{mdframed} \bigskip
+
+
+\begin{proof}
+	If we re-arrange equation \ref{eq:9} we have: \bigskip
+	
+	\[
+		s^2 \varphi(s) = e^{-s} \int_{s}^{\infty} \exp \left( -2 \int_{s}^{t} \frac{1 - e^{-u}}{u} du \right) dt
+	\]\medskip
+	
+	taking the limit as $s \to 0$: \bigskip
+	
+	\begin{eqnarray*}
+		\lim_{s \to 0} s^2 \varphi(s) & = & \int_{0}^{\infty} \exp \left( -2 \int_{0}^{t} \frac{1 - e^{-u}}{u} du \right) dt \\\\
+									  & = & C_R
+	\end{eqnarray*}\medskip
+	
+	from the definition of $\varphi(s)$ (equation \ref{eq:8}): \bigskip
+	
+	\[
+		\int_{0}^{\infty} M(x) e^{-sx} dx = \frac{C_R}{s^2} 
+	\]\medskip
+	
+	as $s \to 0$. Applying the above theorem, we get: \bigskip
+	
+	\begin{eqnarray*}
+					  \int_{0}^{x} M(t) dt & = & \frac{C_R x^2}{\Gamma(3)} \\\\
+										   & = & \frac{C_R x^2}{2} \\\\
+		\frac{2}{x^2} \int_{0}^{x} M(t) dt & = & C_R 
+	\end{eqnarray*}\medskip
+	
+	as $x \to \infty$. Returning to the familiar equation \ref{eq:0} and dividing across by $x$, 
+	and taking the limit as $x \to \infty$, we have: \bigskip
+	
+	\begin{eqnarray*}
+		\lim_{x \to \infty} \frac{M(x)}{x} & = & \lim_{x \to \infty} \left( \frac{1}{x} + \frac{2}{x (x - 1)} \int_{0}^{x - 1} M(t) dt \right) \\\\
+										   & = & C_R
+	\end{eqnarray*}\medskip
+
+	which is the required limit.
+\end{proof}\bigskip
+
+
+
+
+
+
+
+
+
+
+
+\section{Remarks}
+
+While certainly more interesting than Weiner's approach - indeed an expression for the 
+jamming limit is derived - this author is still left feeling dissatisfied by the approach 
+taken. The Laplace transform of the master equation is introduced without any of it's 
+specific features being used - for example, the reduction of an analytic problem to an 
+algebraic problem, and no inverse step is performed - it is merely used as a convenient 
+form in order to apply a \emph{Tauberian theorem}, and hence the reference to the Laplace 
+Transform could have been omitted. \bigskip
+
+
+
+
+
+
+
+
+
+
+

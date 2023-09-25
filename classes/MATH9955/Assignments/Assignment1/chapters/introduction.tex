@@ -1,0 +1,126 @@
+
+\chapter{Introduction}
+
+
+
+
+
+
+
+
+
+
+
+\section{Problem Statement}
+
+Consider an interval $(0, x)$ upon which we place a segment of unit length 
+at random. We continue by placing a second segment of unit length randomly 
+upon the original interval, discarding the segment if it overlaps with the 
+original one. \bigskip
+
+We continue in this fashion until we can no longer add unit segments without 
+overlap. At each step the next position within the interval is chosen from a 
+uniform distribution of the remaining locations within the interval. \bigskip
+
+We are interested in both the expected value of the number of unit segments 
+contained within the interval $(0, x)$, denoted $M(x)$, and the expected 
+filling density of unit segments within the interval, denoted $M(x) / x$. \bigskip
+
+
+
+
+
+
+\section{Derivation of the Master Equation}
+
+We first look at the derivation of the master equation for $M(x)$ which forms the 
+heart of the problem, and will be crop up in the rest of the paper. \bigskip
+
+We initially consider an interval $(0, x + 1)$ and upon this place a unit segment 
+$(t, t + 1)$. This unit segment partitions the original interval into two smaller 
+intervals - $(0, t)$ and $(t + 1, x + 1)$. The expected number of unit segments 
+contained within the original interval is: \bigskip
+
+\[
+	M(x + 1) = M(t) + 1 + M(x - t)
+\]\medskip
+
+where $1$ represents the expectation of the added segment within the unit interval 
+$(t, t + 1)$ - in other words, we have one unit segment within the unit interval 
+$(t, t + 1)$. Integrating with respect to $t$ we get: \bigskip
+
+\begin{eqnarray*}
+	\int_{0}^{x} M(x + 1) dt & = & \int_{0}^{x} [M(t) + 1 + M(x - t)] dt \\\\
+	M(x + 1) \int_{0}^{x} dt & = & \int_{0}^{x} dt + \int_{0}^{x} [M(t) + M(x - t)] dt \\\\
+			M(x + 1) \cdot x & = & x + \int_{0}^{x} [M(t) + M(x - t)] dt \\\\
+					M(x + 1) & = & 1 + \frac{1}{x} \int_{0}^{x} [M(t) + M(x - t)] dt 
+\end{eqnarray*}\medskip
+
+as the distributions within each of the smaller intervals are uniform, and hence 
+the same, we get: \bigskip
+
+\begin{eqnarray} \label{eq:1}
+	M(x + 1) = 1 + \frac{2}{x} \int_{0}^{x} M(t) dt
+\end{eqnarray}\medskip
+
+changing variables we get: \bigskip
+
+\begin{eqnarray} \label{eq:2}
+	M(x) = 1 + \frac{2}{x - 1} \int_{0}^{x - 1} M(t) dt
+\end{eqnarray}\medskip
+
+more completely, and because adding a unit segment to an interval of length less 
+than $1$ has no meaning, the equation for $M(x)$ can be written as follows: \bigskip
+
+\begin{eqnarray} \label{eq:3}
+	M(x) = 
+	\begin{dcases}
+		0,                                            & \text{for } 0 \leq x < 1 \\\\
+		1,                                            & \text{for } x = 1 \\\\
+		1 + \frac{2}{x - 1} \int_{0}^{x - 1} M(t) dt, & \text{for } x > 1
+	\end{dcases}
+\end{eqnarray}\medskip
+
+which has the form of a recurrence. 
+
+
+
+
+
+
+\section{Applications}
+
+The main application of the parking problem is to the theory of random 
+sequential adsorption (RSA), which models the adsorption of particles onto 
+a solid substrate. It is important to make the distinction between 
+\emph{adsorption} and \emph{absorption} - adsorption involves the surface 
+of the material involved, whereas absorption involves the full volume of 
+the material. \bigskip
+
+Some examples of RSA are adsorption of gas molecules, polymer chains, 
+latex particles, bacteria, proteins, and colloidal particles (insoluble 
+particles contained within a suspension) onto a surface. Another important 
+application is when applied to genome sequencing where a newly-arriving 
+sequenced clone is allowed to partially overlap an existing sequenced 
+clone - in which case the parking problem with overlap the most relevant 
+model. In some cases adsorbed particles can also be released from a 
+surface, a process know as \emph{desorption}, and in this case the 
+reversible parking problem is the most relevant model. \bigskip
+
+In order to maximize the adsorption of particles, a clear understanding of 
+the problem is required, and to that end we need to be able to faithfully 
+model the process. This paper will offer a survey of the approaches to 
+modelling the one-dimensional parking problem, and provide a different 
+approach to both validate the approaches used to model the process, and to 
+calculate the associated constants. \bigskip
+
+
+
+
+
+
+
+
+
+
+

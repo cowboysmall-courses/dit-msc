@@ -1,0 +1,27 @@
+LA  - eng
+PMC - PMC310895
+PMID- 10899151
+VI  - 10
+IP  - 7
+PG  - 1020-30
+DP  - 2000 Jul
+PHST- 2000/02/02 [received]
+PHST- 2000/05/10 [accepted]
+IS  - 1088-9051 (Print)
+TI  - Parking Strategies for Genome Sequencing
+AB  - The parking strategy is an iterative approach to DNA sequencing. Each iteration consists of sequencing a novel portion of target DNA that does not overlap any previously sequenced region. Subject to the constraint of no overlap, each new region is chosen randomly. A parking strategy is often ideal in the early stages of a project for rapidly generating unique data. As a project progresses, parking becomes progressively more expensive and eventually prohibitive. We present a mathematical model with a generalization to allow for overlaps. This model predicts multiple parameters, including progress, costs, and the distribution of gap sizes left by a parking strategy. The highly fragmented nature of the gaps left after an initial parking strategy may make it difficult to finish a project efficiently. Therefore, in addition to our parking model, we model gap closing by walking. Our gap-closing model is generalizable to many other strategies. Our discussion includes modified parking strategies and hybrids with other strategies. A hybrid parking strategy has been employed for portions of the Human Genome Project. 
+AU  - Roach JC
+FAU - Roach, Jared C
+AD  - The Institute for Systems Biology, Seattle, Washington 98105 USA; Department of Molecular Biotechnology, University of Washington, Seattle, Washington 98195 USA; Departments of Management Science, Finance, and Statistics, University of Washington, Seattle, Washington 98195 USA
+AU  - Thorsson V
+FAU - Thorsson, Vesteinn
+AD  - The Institute for Systems Biology, Seattle, Washington 98105 USA; Department of Molecular Biotechnology, University of Washington, Seattle, Washington 98195 USA; Departments of Management Science, Finance, and Statistics, University of Washington, Seattle, Washington 98195 USA
+AD  - The Institute for Systems Biology, Seattle, Washington 98105 USA; Department of Molecular Biotechnology, University of Washington, Seattle, Washington 98195 USA; Departments of Management Science, Finance, and Statistics, University of Washington, Seattle, Washington 98195 USA
+AU  - Siegel AF
+FAU - Siegel, Andrew F
+AD  - The Institute for Systems Biology, Seattle, Washington 98105 USA; Department of Molecular Biotechnology, University of Washington, Seattle, Washington 98195 USA; Departments of Management Science, Finance, and Statistics, University of Washington, Seattle, Washington 98195 USA
+AD  - The Institute for Systems Biology, Seattle, Washington 98105 USA; Department of Molecular Biotechnology, University of Washington, Seattle, Washington 98195 USA; Departments of Management Science, Finance, and Statistics, University of Washington, Seattle, Washington 98195 USA
+AD  - The Institute for Systems Biology, Seattle, Washington 98105 USA; Department of Molecular Biotechnology, University of Washington, Seattle, Washington 98195 USA; Departments of Management Science, Finance, and Statistics, University of Washington, Seattle, Washington 98195 USA
+TA  - Genome Res
+JT  - Genome Research
+SO  - Genome Res. 2000 Jul;10(7):1020-30.

@@ -1,0 +1,139 @@
+---
+title: "The Worcester Heart Attack Study"
+author: "Jerry Kiely"
+date: "19 April 2017"
+header-includes:
+    - \usepackage{setspace}\doublespacing
+    # - \usepackage{setspace}\onehalfspacing
+    - \usepackage{float}
+output: 
+  pdf_document:
+    fig_caption: yes
+---
+
+```{r echo=FALSE, message=FALSE}
+
+set.seed(27041970)
+
+library(survival)
+library(knitr)
+
+whas = read.csv("~/Workspace/College/DIT/MATH9952/Data/whas.csv", header = T)
+attach(whas)
+
+```
+
+## Introduction
+
+The main goal of this study is to describe factors associated survival rates following 
+hospital admission for acute myocardial infarction (MI), i.e. heart attack.
+
+| Name      | Description               | Codes / Values                    |
+|-----------|---------------------------|-----------------------------------|
+| id        | Identification Number     |                                   |
+| age       | Age at Hospital Admission | Years                             |
+| gender    | Gender                    | 0 = Male, 1 = Female              |
+| hr        | Initial Heart Rate        | Beats per minute                  |
+| bmi_group | Body Mass Index category  | low, medium, high, very.high      |
+| cvd       | History of Cardiovascular | 0 = No, 1 = Yes                   |
+|           | Disease                   |                                   |
+| chf       | Congestive Heart Compli-  | 0 = No, 1 = Yes                   |
+|           | cations                   |                                   |
+| miord     | MI Order                  | 0 = First, 1 = Recurrent          |
+| los       | Length of Hospital Stay   | Days from Hospital Admission      |
+| lenfol    | Time variable             | Days from Hospital Admission Date |
+|           |                           | to Date of Last Follow-up         |
+| fstat     | Event indicator           | 0 = Alive (censored), 1 = Dead    |
+
+
+\pagebreak
+
+
+## The Data
+
+Before fitting a model to the data let's have a look at the behaviour of some of the 
+predictors in isolation, beginning with Gender. From \autoref{survival-gender} we can 
+see that both the survival functions are reasonably close, with the female group being 
+slightly worse than the male. 
+
+
+
+```{r survival-gender, echo=FALSE, fig.cap="\\label{survival-gender}Survival Function by Gender"}
+
+fit1 = survfit(Surv(lenfol, fstat) ~ factor(gender), conf.type = 'plain', data = whas)
+
+plot(fit1, col = c("blue", "red"))
+legend(2000, 1, legend = c("Male", "Female"), fill = c("blue", "red"), cex = 0.6)
+
+```
+
+
+Now lets look at BMI Group. As can be seen from \autoref{survival-bmi}, there is a lot of variation in 
+the survival functions for the different BMI groups. What's interesting is that the low 
+and very high groups seem to have similar survival functions, and the medium BMI group 
+seems to have the worst survival function.
+
+
+\pagebreak
+
+
+```{r survival-age, echo=FALSE, fig.cap="\\label{survival-bmi}Survival Function by BMI Group"}
+
+fit2 = survfit(Surv(lenfol, fstat) ~ factor(bmi_group), conf.type = 'plain', data = whas)
+
+plot(fit2, col = c("blue", "red", "green", "yellow"))
+legend(2000, 1, legend = c("Low", "Medium", "High", "Very High"), fill = c("blue", "red", "green", "yellow"), cex = 0.6)
+
+```
+
+
+Both these predictors look to be of interest, and there does seem to be significant difference between 
+the survival functions for each group within these predictors. Lets move on to fitting a full model and 
+seeing which predictors are significant and which are not.
+
+
+
+
+## The Model
+
+To begin with we fit a Cox PH model with all predictors and look to see which, if any, predictors can 
+be pruned as insignificant. As can be seen from \autoref{tb-dropa}, the predictors with an AIC value 
+less than the intercept's AIC value are cvd, los, and miord. Also, by looking at the p-values (right-most 
+column) we see that these predictors have values which would also indicate insignificance. 
+
+
+\pagebreak
+
+
+```{r echo=FALSE}
+
+fita  = coxph(Surv(lenfol, fstat) ~ age + factor(gender) + hr + factor(bmi_group) + cvd + chf + factor(miord) + los, data = whas)
+dropa = drop1(fita, test = 'Chisq')
+
+kable(dropa, caption = "\\label{tb-dropa}table detailing statistics for all predictors")
+
+```
+
+
+We prune these values and look at the results:
+
+
+```{r echo=FALSE}
+
+fitf  = coxph(Surv(lenfol, fstat) ~ age + factor(gender) + hr + factor(bmi_group) + chf, data = whas)
+dropf = drop1(fitf, test = 'Chisq')
+
+kable(dropf, caption = "\\label{tb-cp}table detailing remaining predictors after pruning")
+
+```
+
+
+As we can see, all predictors are now very significant. Looking at the coefficients of the model - the 
+coefficients representing the log hazard ratios - we can see that (after exponentiating) for a unit 
+increase in age we have a `r round((exp(fitf$coefficients[[1]]) - 1) * 100, digits = 2)`% increase in 
+hazard. For gender, the hazard decreases by `r round((1 - exp(fitf$coefficients[[2]])) * 100, digits = 2)`% 
+going from male to female. For initial heart rate we see the hazard increases by 
+`r round((exp(fitf$coefficients[[3]]) - 1) * 100, digits = 2)`% for unit increase. And for congestive heart 
+complications, the hazard increases by `r round((exp(fitf$coefficients[[7]]) - 1) * 100, digits = 2)`% 
+going from no to yes (which is pretty much to be expected). 
+

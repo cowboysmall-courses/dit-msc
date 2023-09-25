@@ -1,0 +1,252 @@
+---
+title: "Skin Cells"
+author: "Jerry Kiely"
+date: "26 February 2017"
+# header-includes:
+#     - \usepackage{setspace}\doublespacing
+output: pdf_document
+---
+
+```{r echo=FALSE, message=FALSE}
+
+library(ggplot2)
+library(gdata)
+library(multcomp)
+
+setwd("~/Workspace/College/DIT/MATH9952/Data")
+
+data = read.xls("skincells.xls", header = T)
+attach(data)
+
+```
+
+## Introduction
+
+Researchers in the Radiation and Environmental Science Centre are conducting research into 
+the effect of solar radiation on the mortality of human skin cells. Colonies of human skin 
+cells are placed in medium and transferred to wells on experimental plates. These plates 
+are then exposed to radiation in a solar simulator for various amounts of time from 0 
+(control) to 3.5 minutes minutes. After exposure, the number of live cells in a sample are 
+counted under a microscope and the total number of live cells in the colony is extrapolated 
+from the sample result. The purpose of this experiment is to assess the effect of the 
+varying times of exposure to radiation on cell death. Due to inherent variability in the 
+response of cells, the researchers replicate their experiments a number of times. Their is 
+also concern that environmental conditions within the lab from day to day may have an 
+impact on the results. Therefore, the experiment is repeated over a number of days. 
+Initially the experiment is designed with complete balance; i.e. the same number of 
+replications at each exposure time on each day. But due to experimental loss, complete 
+balance was not reflected in the final data (e.g. some plates were contaminated and had to
+be discarded). 
+
+
+The dataset is skincells.xls and is available on Webcourses. The variables 
+are:
+
+
+
+| Variable | Description                                               |
+|----------|-----------------------------------------------------------|
+| day      | The day (number code) that observation was recorded.      |
+| time     | The amount of radiation exposure in minutes the colony    |
+|          | was exposed to in the solar simulator.                    |
+| logcells | The logarithm (base 2) of the number of live cells in the |
+|          | colony extrapolated from the sample result under the      |
+|          | microscope.                                               |
+
+
+
+```{r echo=FALSE}
+
+fit_day1 = lm(logcells[day == 1] ~ time[day == 1], data = data)
+fit_day2 = lm(logcells[day == 2] ~ time[day == 2], data = data)
+fit_day3 = lm(logcells[day == 3] ~ time[day == 3], data = data)
+fit_day4 = lm(logcells[day == 4] ~ time[day == 4], data = data)
+
+coef_day1 = data.frame(coef(fit_day1))[1, ]
+coef_day2 = data.frame(coef(fit_day2))[1, ]
+coef_day3 = data.frame(coef(fit_day3))[1, ]
+coef_day4 = data.frame(coef(fit_day4))[1, ]
+
+confint_day1 = data.frame(confint(fit_day1))[1, ]
+confint_day2 = data.frame(confint(fit_day2))[1, ]
+confint_day3 = data.frame(confint(fit_day3))[1, ]
+confint_day4 = data.frame(confint(fit_day4))[1, ]
+
+
+```
+
+
+The central question is to establish whether the environmental conditions within the lab 
+have an impact on the results. Below is a table of the means for each of the day, and the 
+corresponding confidence intervals for each day:
+
+
+| Day | Mean          | Lower 95%           | Upper 95%           | 
+|-----|---------------|---------------------|---------------------|
+| 1   | `r coef_day1` | `r confint_day1[1]` | `r confint_day1[2]` |
+| 2   | `r coef_day2` | `r confint_day2[1]` | `r confint_day2[2]` |
+| 3   | `r coef_day3` | `r confint_day3[1]` | `r confint_day3[2]` |
+| 4   | `r coef_day4` | `r confint_day4[1]` | `r confint_day4[2]` |
+
+
+the above data would suggest that there is not much difference between the means, with maybe 
+the means on day 1 and day 2 having the greatest difference.
+
+
+
+
+```{r echo=FALSE, fig.width=9, fig.height=4.5}
+
+
+plot(time[day == 1], logcells[day == 1], pch = 20, col = 'orange', xlab = "time", ylab = "log cells")
+points(time[day == 2], logcells[day == 2], pch = 20, col = 'cyan')
+points(time[day == 3], logcells[day == 3], pch = 20, col = 'green')
+points(time[day == 4], logcells[day == 4], pch = 20, col = 'yellow')
+legend(1.5, 12, legend = c("day 1", "day 2", "day 3", "day 4"), fill = c("orange", "cyan", "green", "yellow"), horiz = TRUE)
+
+```
+
+
+The above scatterplot of the data with days having different colours would seem to 
+confirm this.
+
+
+## First Model
+
+Initially, a linear model was fitted with time as a continuous predictor, and day as a 
+categorical predictor, with an interraction allowed between day and time.
+
+$$y_i = \beta_0 + \beta_1(time_i) + \beta_2(\delta_{i2}) 
++ \beta_3(\delta_{i3}) + \beta_4(\delta_{i4}) 
++ \beta_5(\delta_{i2} \times time_i) 
++ \beta_6(\delta_{i3} \times time_i) 
++ \beta_7(\delta_{i4} \times time_i) 
++ \epsilon_i$$
+
+The null hypothesis may be stated as follows:
+
+\begin{align*}
+   H_0 & : \qquad \beta_5 = \beta_6 = \beta_7 = 0
+   \\
+   H_a & : \qquad \text{$\beta_5$, $\beta_6$, and $\beta_7$ are different to $0$} 
+\end{align*}
+
+
+```{r echo=FALSE}
+
+fit1 = lm(logcells ~ factor(day) * time, data = data)
+values = anova(fit1)
+
+```
+
+The F-test statistic was found to be `r values[3, 4]` on `r values[3, 1]` and `r values[4, 1]` 
+degrees of freedom, yielding a p-value of `r values[3, 5]`. Therefore we fail to reject the 
+null hypothesis and assume no interraction between the predictors (i.e. that the common slopes 
+model is adequate).
+
+
+## Second Model
+
+Secondly, a linear model was fitted with time as a continuous predictor, and day as a 
+categorical predictor, with no interraction between day and time.
+
+$$y_i = \beta_0 + \beta_1(time_i) + \beta_2(\delta_{i2}) + \beta_3(\delta_{i3}) + \beta_4(\delta_{i4}) + \epsilon_i$$
+
+The null hypothesis may be stated as follows:
+
+\begin{align*}
+   H_0 & : \qquad \beta_2 = \beta_3 = \beta_4 = 0
+   \\
+   H_a & : \qquad \text{$\beta_2$, $\beta_3$, and $\beta_4$ are different to $0$} 
+\end{align*}
+
+
+```{r echo=FALSE}
+
+fit2 = update(fit1, ~. - factor(day):time)
+values = anova(fit2)
+
+```
+
+The F-test statistic was found to be `r values[1, 4]` on `r values[1, 1]` and `r values[3, 1]` 
+degrees of freedom, yielding a p-value of `r values[1, 5]`. Therefore, although close, we fail 
+to reject the null hypothesis and assume no significant difference between the days.
+
+
+## Third Model
+
+Thirdly, a linear model was fitted with time as a continuous predictor, and a quadratic effect 
+of time.
+
+$$y_i = \beta_0 + \beta_1(time_i) + \beta_2({time_i}^2) + \epsilon_i$$
+
+The null hypothesis may be stated as follows:
+
+\begin{align*}
+   H_0 & : \qquad \beta_2 = 0
+   \\
+   H_a & : \qquad \text{$\beta_2$ is different to $0$} 
+\end{align*}
+
+
+```{r echo=FALSE}
+
+fit3 = lm(logcells ~ time + I(time^2), data = data)
+values = anova(fit3)
+
+```
+
+The F-test statistic was found to be `r values[2, 4]` on `r values[2, 1]` and `r values[3, 1]` 
+degrees of freedom, yielding a very small p-value of `r sprintf("%0.8f", values[2, 5])`. Therefore we reject the null hypothesis 
+and assume a quadratic effect.
+
+
+```{r echo=FALSE, fig.width=9, fig.height=4.5}
+
+plot(time, logcells, pch = 20, col = "blue", xlab = "time", ylab = "log cells")
+
+sx = seq(min(time), max(time), len = 200)
+sy = fit3$coeff[1] + fit3$coeff[2]*sx + fit3$coeff[3]*sx^2
+lines(sx, sy, col = 'green', lwd = 2)
+
+
+```
+
+The final plot of the data would seem to validate the research.
+
+## Comparison between days
+
+
+```{r echo=FALSE}
+
+fit4 = lm(logcells ~ factor(day) + time, data = data)
+values = summary(fit4)$coefficients
+
+```
+
+
+Although it is clear that day is not a predictor, there is grounds to exclude day 1 because the 
+results on that day would seem to be significantly different from the results of the other days. 
+Specifically, the differences between day2, day 3, and day 4 are not significant, but the 
+difference between day 1 and day 2 may be statistically significant, with a p-value of 
+`r values[2, 4]`. Therefore day 1 and day 2 may have significant differences, and perhaps day 1 
+should be excluded.
+
+Below is a plot of the data excluding day 1, and with it's associated fitted line.
+
+```{r echo=FALSE, fig.width=9, fig.height=4.5}
+
+logcells = logcells[day != 1]
+time = time[day != 1]
+
+fit5 = lm(logcells ~ time + I(time^2), data = data)
+
+plot(time, logcells, pch = 20, col = "blue", xlab = "time", ylab = "log cells")
+
+sx = seq(min(time), max(time), len = 200)
+sy = fit5$coeff[1] + fit5$coeff[2]*sx + fit5$coeff[3]*sx^2
+lines(sx, sy, col = 'green', lwd = 2)
+
+
+```
+

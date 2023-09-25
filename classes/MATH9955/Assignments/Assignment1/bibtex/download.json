@@ -1,0 +1,46 @@
+{
+    "ISSN": "1088-9051",
+    "PMCID": "PMC310895",
+    "PMID": "10899151",
+    "accessed": {
+        "date-parts": [
+            [
+                2018,
+                6,
+                27
+            ]
+        ]
+    },
+    "author": [
+        {
+            "family": "Roach",
+            "given": "Jared C."
+        },
+        {
+            "family": "Thorsson",
+            "given": "Vesteinn"
+        },
+        {
+            "family": "Siegel",
+            "given": "Andrew F."
+        }
+    ],
+    "container-title": "Genome Research",
+    "container-title-short": "Genome Res",
+    "id": "aiid:310895",
+    "issue": "7",
+    "issued": {
+        "date-parts": [
+            [
+                2000,
+                7
+            ]
+        ]
+    },
+    "page": "1020-1030",
+    "publisher": "Cold Spring Harbor Laboratory Press",
+    "source": "PMC",
+    "title": "Parking Strategies for Genome Sequencing",
+    "type": "article-journal",
+    "volume": "10"
+}

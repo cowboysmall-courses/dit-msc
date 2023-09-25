@@ -1,0 +1,164 @@
+\documentclass{report}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{mathtools}
+\usepackage{titlepic}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{courier}
+\usepackage{lmodern}
+\usepackage{xfrac}
+\usepackage{mdframed}
+\usepackage[T1]{fontenc}
+
+\allowdisplaybreaks
+\setlength\parindent{0pt}
+\graphicspath{{./images/}}
+
+\definecolor{ggreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mmauve}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	stepnumber=1,
+	numbersep=5pt,
+	numberstyle=\small\ttfamily\color{black},
+	breaklines=true,
+	showstringspaces=false,
+	tabsize=2,
+	captionpos=b,
+	commentstyle=\color{ggreen},
+	escapeinside={\%*}{*)},
+	keywordstyle=\color{blue},
+	stringstyle=\color{mmauve},
+	backgroundcolor=\color{backcolour}, 
+}
+
+%\setlength{\tabcolsep}{20pt}
+%\renewcommand{\arraystretch}{1.5}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+
+
+
+\begin{document}
+
+\titlepic{\includegraphics[scale=0.5]{DIT_logo}}
+\title{The Parking Problem}
+\author{Jerry Kiely\\
+	\\
+	School of Mathematical Sciences\\
+	Dublin Institute of Technology\\
+	Dublin 8\\
+	Ireland\\
+	\\
+	\texttt{d16126734@mydit.ie}}
+\date{\today}
+\maketitle
+
+
+
+\tableofcontents
+
+
+\newpage
+
+
+
+%\begin{minipage}[b]{1\linewidth}
+    \listoffigures
+%\end{minipage}
+
+%\begin{minipage}[b]{1\linewidth}
+    \listoftables
+%\end{minipage}
+
+%\begin{minipage}[b]{1\linewidth}
+	\lstlistoflistings
+%\end{minipage}
+
+
+
+
+\newpage
+
+
+
+
+\begin{abstract}
+The \emph{parking problem} was proposed by Alfred R\'{e}nyi in 1958 - cars, modelled 
+as unit intervals, are placed at random upon a street of length $x$ until no spaces 
+that can accommodate cars remain. R\'{e}nyi showed that the \emph{jamming limit}, or 
+expected coverage of cars on the street, is approximately $75\%$.\bigskip
+
+As well as being an interesting problem in it's own right, applications of the parking 
+problem are numerous in physics and chemistry. One of the most interesting applications 
+is in the theory of \emph{Random Sequential Adsorption}, or RSA, which models the 
+surface deposition of particles upon a substrate.\bigskip
+
+There are a number of approaches to this problem in one dimensions. In this paper we 
+will look at three of the approaches - an elementary treatment, an approach that makes 
+use of Laplace Transforms, and the kinetic approach that looks at the time evolution 
+of the line filling process.\bigskip
+
+We will also look at a number of different generalizations of the problem, including 
+\emph{parking with overlap}, also know as \emph{cooperative} RSA, and 
+\emph{the reversible parking problem}, where cars arrive and leave at different rates.
+\end{abstract}
+
+
+
+%\renewcommand{\abstractname}{Acknowledgements}
+%\begin{abstract}
+%	I would like to thank Dana Mackey for her help, advice, and feedback.
+%\end{abstract}
+
+
+
+
+\include{chapters/introduction}
+
+\include{chapters/weiners_approach}
+
+\include{chapters/renyis_approach}
+
+\include{chapters/kinetic_approach}
+
+\include{chapters/generalizations}
+
+\include{chapters/simulations}
+
+\include{chapters/conclusions}
+
+
+
+\appendix
+
+\include{appendices/code}
+
+%\include{appendices/other}
+%
+%\include{appendices/else}
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{bibtex/bibliography}
+
+
+
+\end{document}

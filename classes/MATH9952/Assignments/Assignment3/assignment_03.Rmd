@@ -1,0 +1,136 @@
+---
+title: "The Retention Dataset"
+author: "Jerry Kiely"
+date: "27 March 2017"
+# header-includes:
+#     - \usepackage{setspace}\doublespacing
+output: pdf_document
+---
+
+```{r echo=FALSE, message=FALSE}
+
+setwd("~/Workspace/College/DIT/MATH9952/Data")
+
+# read in the data
+retention = read.csv("retention.csv", header = T)
+
+
+
+```
+
+
+## Introduction
+
+This analysi is concerned with data relating to student retention in the 
+Engineering faculty of DIT. The purpose of the analysis will be to use 
+logistic regression models to identify and quantify relevant risk factors 
+in student retention. The data includes risk factors regarding prior 
+academic performance (e.g. leaving certificate results, leaving 
+certificate maths grade), and personal characteristics (gender, home 
+address, CAO choices made, etc.)  
+
+| Variable name | Details                                              |
+|---------------|------------------------------------------------------|
+| passed        | Whether the student qualified to enter second year   |
+|               | of their degree (0 = did not qualify, 1 = qualified) |
+| gender        | Male (1) or Female (0)                               |
+| lc_points     | Leaving certificate points achieved                  |
+| mathgrd       | Leaving certificate mathematics grade                |
+| CAO_choice    | CAO ranked choice of programme entered               |
+| Address       | Coded home address; 1 = Dublin, 2 = Dublin commuter  |
+|               | belt, 3 = outside Dublin commuter belt               |
+
+
+## The Data
+
+The data contains some extra columns that we don't need.  
+
+
+```{r }
+
+colnames(retention)
+
+```
+
+
+so we remove them:  
+
+
+```{r }
+
+retention$X           = NULL
+retention$lc_points.1 = NULL
+
+```
+
+
+we convert columns to factors:  
+
+
+```{r }
+
+retention$mathgrd     = as.factor(retention$mathgrd)
+retention$address     = as.factor(retention$address)
+
+```
+
+
+and we remove rows where NULLs or NAs are present:  
+
+
+```{r }
+
+retention             = retention[complete.cases(retention),]
+
+```
+
+
+finally we have a look at the data:  
+
+
+```{r }
+
+head(retention)
+
+```
+
+
+## The Model
+
+First thing we do is fit a linear model to the data, including all 
+possible interactions between the predictors. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+fit1 = glm(passed ~ .*., family = binomial(link = "logit"), data = retention)
+
+```
+
+Using either of the drop1 or the step functions we prune unimportant 
+predictors from the model. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+fitf = glm(passed ~ gender + mathgrd + CAO_choice + lc_points + gender:CAO_choice, family = binomial(link = "logit"), data = retention)
+drop1(fitf, test = 'LRT')
+
+```
+
+
+We are left with the following formula:  
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+summary(fitf)
+
+```
+
+
+looking at the coefficient for lc_points, also it's log odds ratio 
+for example, we see a value of `r fitf$coefficients[[11]]` with an 
+odds ratio of `r exp(fitf$coefficients[[11]])` which would indicate 
+that the odds of the student entering the second year of their 
+degree would increase by `r exp(fitf$coefficients[[11]])` for every 
+leaving certificate  points achieved.
+

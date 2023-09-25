@@ -1,0 +1,328 @@
+
+\chapter{The Simulation Code}
+
+All simulations were implemented in Python. Two implementations were provided 
+for each simulation - a recursive and an iterative implementation. The driver 
+code for each implementation was similar in each case, with the required 
+differences located in one or more extra functions. I will provide listings 
+of the main simulation driver code, and then the different functions that 
+contain the unique implementations for the respective simulations. \bigskip
+
+In listing \ref{lst:code1} we see the code that runs the simulations and 
+aggregates the results of each simulation. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - simulation driver,label=lst:code1]
+	def simulation(iterations, length):
+		results = []
+		
+		print()
+		print(' Parking Problem: running {} simulations'.format(iterations))
+		print()
+	
+		for i in range(iterations):
+			results.append(parking_problem(length))
+	
+		print('          L: {:8d}'.format(length))
+		print(' iterations: {:8d}'.format(iterations))
+		print()
+		
+		return results
+
+\end{lstlisting} \bigskip
+%\end{mdframed} \bigskip
+
+In listing \ref{lst:code2} we see the recursive implementation of the code 
+that parks the cars and calculates the required ratio for the standard case. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - Recursive - standard case,label=lst:code2]
+	def parking_problem(length):
+		spots = []
+		
+		def find_spots(start, end):
+			spot = np.random.uniform(start, end)
+			spots.append(spot)
+			
+			if start <= spot - 1.0:
+				find_spots(start, spot - 1.0)
+			
+			if spot + 1.0 <= end:
+				find_spots(spot + 1.0, end)
+		
+		find_spots(0, length)
+		
+		return len(spots) / float(length)
+
+\end{lstlisting}  \bigskip
+%\end{mdframed} \bigskip
+
+In listing \ref{lst:code2.5} we see the iterative implementation of the code 
+that parks the cars and calculates the required ratio for the standard case. 
+We can see that there are extra functions to check if there are available parking 
+spots on the line, to check if a spot can be occupied by a car, and to draw 
+a parking spot uniformly from the line. The main function retrieves a parking 
+spot, if a car fits in the spot it is parked, and iterates in this fashion 
+until there are no more spots available for parking. A counter is maintained 
+that prevents the iterative function from continuing indefinitely. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - Iterative - standard case,label=lst:code2.5]
+	def spots_available(spots, length):
+		if 0 <= spots[0] - 1.0:
+			return True
+
+		for i in range(len(spots) - 1):
+			if spots[i] + 1.0 <= spots[i + 1] - 1.0:
+				return True
+
+		return spots[-1] + 1 <= length - 1.0
+
+	def spot_found(spot, spots, length):
+		if 0 <= spot <= spots[0] - 1.0:
+			return True
+
+		for i in range(len(spots) - 1):
+			if spots[i] + 1.0 <= spot <= spots[i + 1] - 1.0:
+				return True
+
+		return spots[-1] + 1.0 <= spot <= length - 1.0
+
+	def get_parking(length):
+		return np.random.uniform(0, length)
+
+	def parking_problem(length):
+		spots = [get_parking(length)]
+		count = 0
+
+		while spots_available(spots, length):
+			spot = get_parking(length)
+
+			if spot_found(spot, spots, length):
+				spots.append(spot)
+				spots.sort()
+
+			count += 1
+
+			if count == 10000000:
+				break
+
+		return len(spots) / float(length)
+
+\end{lstlisting}  \bigskip
+%\end{mdframed} \bigskip
+
+In listing \ref{lst:code3} we see the recursive implementation of the code 
+that parks the cars and calculates the required ratio for the discrete case. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - Recursive - discrete case,label=lst:code3]
+	def parking_problem(length):
+		spots = []
+
+		def find_spots(start, end):
+			spot = np.random.randint(start, end)
+			spots.append(spot)
+
+			if start <= spot - 2:
+				find_spots(start, spot - 1)
+
+			if spot + 3 <= end:
+				find_spots(spot + 2, end)
+
+		find_spots(0, length)
+
+		return (len(spots) * 2) / float(length)
+
+\end{lstlisting}  \bigskip
+%\end{mdframed} \bigskip
+
+In listing \ref{lst:code3.5} we see the iterative implementation of the code 
+that parks the cars and calculates the required ratio for the discrete case. 
+Similar to the standard case, there are extra functions provided with the 
+difference being that the car length is set to $2$, and an integer parking 
+spot is drawn from the line. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - Iterative - discrete case,label=lst:code3.5]
+	def spots_available(spots, length):
+		if 0 <= spots[0] - 2:
+			return True
+
+		for i in range(len(spots) - 1):
+			if spots[i] + 2 <= spots[i + 1] - 2:
+				return True
+
+		return spots[-1] + 2 <= length - 1
+
+	def spot_found(spot, spots, length):
+		if 0 <= spot <= spots[0] - 2:
+			return True
+
+		for i in range(len(spots) - 1):
+			if spots[i] + 2 <= spot <= spots[i + 1] - 2:
+				return True
+
+		return spots[-1] + 2 <= spot <= length - 1
+
+	def get_parking(length):
+		return np.random.randint(0, length)
+
+	def parking_problem(length):
+		spots = [get_parking(length)]
+		count = 0
+
+		while spots_available(spots, length):
+			spot = get_parking(length)
+
+			if spot_found(spot, spots, length):
+				spots.append(spot)
+				spots.sort()
+
+			count += 1
+
+			if count == 10000000:
+				break
+
+		return (len(spots) * 2) / float(length)
+
+\end{lstlisting}  \bigskip
+%\end{mdframed} \bigskip
+
+In listing \ref{lst:code4} we see the recursive implementation of the code 
+that parks the cars and calculates the required ratio for the overlap case. 
+For the overlap case we have added an extra function for calculating the total  
+length of the gaps. This is necessary in the overlap case precisely because 
+cars can overlap when they park, and hence the number of cars can not be used 
+as a measure of the coverage. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - Recursive - overlap case,label=lst:code4]
+	def parking_problem(length, overlap):
+		exclusion = 1.0 - overlap
+		spots     = []
+		
+		def find_spots(start, end):
+			spot = np.random.uniform(start, end)
+			spots.append(spot)
+			
+			if start <= spot - exclusion:
+				find_spots(start, spot - exclusion)
+			
+			if spot + exclusion <= end:
+				find_spots(spot + exclusion, end)
+		
+		find_spots(0, length)
+		
+		return (length - total_gaps(sorted(spots))) / float(length)
+	
+	def total_gaps(spots):
+		total = 0
+		
+		for i in range(len(spots) - 1):
+			value = spots[i + 1] - (spots[i] + 1)
+			if value > 0:
+				total += value 
+		
+		value = spots[-1] - (spots[-2] + 1)
+		if value > 0:
+			total += value 
+		
+		return total
+
+\end{lstlisting}  \bigskip
+%\end{mdframed} \bigskip
+
+In listing \ref{lst:code4.5} we see the iterative implementation of the code 
+that parks the cars and calculates the required ratio for the overlap case. \bigskip
+
+%\begin{mdframed}
+\begin{lstlisting}[language=python,caption=Parking Problem - Iterative - overlap case,label=lst:code4.5]
+	def spots_available(spots, length, overlap):
+		exclusion = 1.0 - overlap
+
+		if 0 <= spots[0] - exclusion:
+			return True
+
+		for i in range(len(spots) - 1):
+			if spots[i] + exclusion <= spots[i + 1] - exclusion:
+				return True
+
+		return spots[-1] + exclusion <= length - exclusion
+
+	def spot_found(spot, spots, length, overlap):
+		exclusion = 1.0 - overlap
+
+		if 0 <= spot <= spots[0] - exclusion:
+			return True
+
+		for i in range(len(spots) - 1):
+			if spots[i] + exclusion <= spot <= spots[i + 1] - exclusion:
+				return True
+
+		return spots[-1] + exclusion <= spot <= length - exclusion
+
+	def get_parking(length):
+		return np.random.uniform(0, length)
+
+	def total_gaps(spots):
+		total = 0
+
+		for i in range(len(spots) - 1):
+			value = spots[i + 1] - (spots[i] + 1)
+			if value > 0:
+				total += value 
+
+		value = spots[-1] - (spots[-2] + 1)
+		if value > 0:
+			total += value 
+
+		return total
+
+	def parking_problem(length, overlap):
+		spots = [get_parking(length)]
+		count = 0
+
+		while spots_available(spots, length, overlap):
+			spot = get_parking(length)
+
+			if spot_found(spot, spots, length, overlap):
+				spots.append(spot)
+				spots.sort()
+
+			count += 1
+			
+			if count == 10000000:
+				break
+
+		return (length - total_gaps(sorted(spots))) / float(length)
+
+\end{lstlisting}  \bigskip
+%\end{mdframed} \bigskip
+
+The code is available at \url{https://github.com/cowboysmall/simulations} 
+and can be cloned using the following command: \bigskip
+
+\begin{lstlisting}[numbers=none]
+	git clone https://github.com/cowboysmall/simulations
+\end{lstlisting} \bigskip
+
+once the repository has been cloned, move into the simulations directory 
+and run the simulations. And example of running a simulation is shown 
+below: \bigskip
+
+\begin{lstlisting}[numbers=none]
+	python3 simulations/parking/parking_06.py -n 100 -l 1000 -o 0.3
+\end{lstlisting} \bigskip
+
+where: \bigskip
+
+\begin{itemize}
+	\item \textbf{parking\_01.py} is the standard parking problem, iterative case
+	\item \textbf{parking\_02.py} is the standard parking problem, recursive case
+	\item \textbf{parking\_03.py} is the discrete parking problem, iterative case
+	\item \textbf{parking\_04.py} is the discrete parking problem, recursive case
+	\item \textbf{parking\_05.py} is the overlap parking problem, iterative case
+	\item \textbf{parking\_06.py} is the overlap parking problem, recursive case
+\end{itemize}\medskip
+
