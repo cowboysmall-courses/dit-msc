@@ -18,73 +18,76 @@
 # where $r=\frac{k}{h^2}$
 # 
 
-# In[2]:
 
-# LIBRARY
-# vector manipulation
+
+# %%
+
 import numpy as np
-# math functions
-import math 
-
-# THIS IS FOR PLOTTING
-
-get_ipython().magic('matplotlib inline')
-import matplotlib.pyplot as plt # side-stepping mpl backend
+import matplotlib.pyplot as plt
 import warnings
+
+
 warnings.filterwarnings("ignore")
 
 
-# In[51]:
 
-N=10
-Nt=250
-h=1/N
-ht=1/Nt
+# %%
 
-time_iteration=10
-time=np.arange(0,(time_iteration+.5)*ht,ht)
+N  = 10
+Nt = 250
+h  = 1 / N
+ht = 1 / Nt
 
-x=np.arange(0,1.0001,h)
+time_iteration = 10
 
-w=np.zeros((N+1,time_iteration+1))
-r=ht/(h*h)
-A=np.zeros((N-1,N-1))
-c=np.zeros(N-1)
-b=np.zeros(N-1)
-b[0]=0
+time = np.arange(0, (time_iteration + .5) * ht, ht)
+x    = np.arange(0, 1.0001, h)
+w    = np.zeros((N + 1, time_iteration + 1))
+r    = ht / (h * h)
+A    = np.zeros((N - 1, N - 1))
+c    = np.zeros(N - 1)
+b    = np.zeros(N - 1)
+
+b[0] = 0
+
+
+
+# %%
 
 # Initial Condition
-for i in range (1,N):
-    #w[0,i]=1-x[i]-1/np.pi*np.sin(2*np.pi*x[i])
-    w[i,0]=2*x[i]
-    if x[i]>0.5:
-        w[i,0]=2*(1-x[i])
-    
+for i in range(1, N):
+    w[i, 0] = 2 * x[i]
+    if x[i] > 0.5:
+        w[i, 0] = 2 * (1 - x[i])
 
 # Boundary Condition
-for k in range (0,time_iteration):
-    #w[k,0]=1
-    w[0,k]=0
-    w[N,k]=0
+for k in range(0, time_iteration):
+    w[0, k] = 0
+    w[N, k] = 0
+
+for i in range(0, N - 1):
+    A[i, i] = 1 - 2 * r
+
+for i in range(0, N - 2):
+    A[i + 1, i] = r
+    A[i, i + 1] = r
 
 
-for i in range (0,N-1):
-    A[i,i]=1-2*r
 
-for i in range (0,N-2):           
-    A[i+1,i]=r
-    A[i,i+1]=r
-    
 
-fig = plt.figure(figsize=(8,4))
+# %%
+
+fig = plt.figure(figsize = (8, 4))
+
 plt.matshow(A)
 plt.xlabel('i')
 plt.ylabel('j')
-plt.xticks(np.arange(N-1), np.arange(1,N-0.9,1))
-plt.yticks(np.arange(N-1), np.arange(1,N-0.9,1))
-clb=plt.colorbar()
+plt.xticks(np.arange(N - 1), np.arange(1, N - 0.9, 1))
+plt.yticks(np.arange(N - 1), np.arange(1, N - 0.9, 1))
+
+clb = plt.colorbar()
 clb.set_label('Matrix value')
-clb.set_clim((-1,1))
+clb.set_clim((-1, 1))
 
 
 plt.show()
@@ -92,32 +95,38 @@ plt.show()
 
 
 
-for k in range (1,time_iteration+1):
-    w[1:(N),k]=np.dot(A,w[1:(N),k-1])
-    
+# %%
+
+for k in range(1, time_iteration + 1):
+    w[1:(N), k] = np.dot(A, w[1:(N), k - 1])
 
 
-print(w[:,3])
+
+# %%
+
+print(w[:, 3])
 print(A)
 
-fig = plt.figure(figsize=(8,4))
+
+
+# %%
+
+fig = plt.figure(figsize = (8, 4))
+
 plt.plot(w)
 plt.xlabel('x')
 plt.ylabel('w')
 
+
 fig = plt.figure()
+
 plt.imshow(w.transpose())
 plt.xticks(np.arange(len(x)), x)
 plt.yticks(np.arange(len(time)), time)
 plt.xlabel('x')
 plt.ylabel('time')
-clb=plt.colorbar()
+
+clb = plt.colorbar()
 clb.set_label('w')
 
 plt.show()
-
-
-# In[ ]:
-
-
-

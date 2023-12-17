@@ -44,13 +44,13 @@ c    = np.zeros(N - 1)
 
 # %%
 
-for i in range (1, N):
+for i in range(1, N):
     w[0, i] = 2 * np.sin(2 * np.pi * x[i])
 
-for i in range (0, N - 1):
+for i in range(0, N - 1):
     A[i, i] = 2
 
-for i in range (0, N - 2):           
+for i in range(0, N - 2):
     A[i + 1, i] = -1
     A[i, i + 1] = -1
 
@@ -68,7 +68,7 @@ plt.matshow(A)
 
 # %%
 
-for k in range (1,Nt):
+for k in range(1, Nt):
     w[k, 1:(N)] = np.dot(Ainv, w[k - 1, 1:(N)])
 
 

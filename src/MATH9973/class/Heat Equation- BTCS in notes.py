@@ -23,7 +23,6 @@
 # %%
 
 import numpy as np
-import math 
 import matplotlib.pyplot as plt
 import warnings
 
@@ -49,27 +48,27 @@ A    = np.zeros((N - 1, N - 1))
 c    = np.zeros(N - 1)
 b    = np.zeros(N - 1)
 
-b[0]=0
+b[0] = 0
 
 
 
 # %%
 
 # Initial Condition
-for i in range (1, N):
+for i in range(1, N):
     w[i, 0] = 2 * x[i]
     if x[i] > 0.5:
         w[i, 0] = 2 * (1 - x[i])
 
 # Boundary Condition
-for k in range (0, time_iteration):
+for k in range(0, time_iteration):
     w[0, k] = 0
     w[N, k] = 0
 
-for i in range (0, N - 1):
+for i in range(0, N - 1):
     A[i, i] = 1 + 2 * r
 
-for i in range (0,N-2):           
+for i in range(0, N - 2):
     A[i + 1, i] = -r
     A[i, i + 1] = -r
 
@@ -97,19 +96,19 @@ plt.show()
 
 Ainv = np.linalg.inv(A)
 
-for k in range (1,time_iteration+1):
+for k in range(1, time_iteration + 1):
     w[1:(N), k] = np.dot(Ainv, w[1:(N), k - 1])
-    
+
 
 
 # %%
 
-print(w[:,1])
+print(w[:, 1])
 print(A)
-print(w[:,2])
-print(w[:,3])
-print(w[:,4])
-print(w[:,5])
+print(w[:, 2])
+print(w[:, 3])
+print(w[:, 4])
+print(w[:, 5])
 
 
 
