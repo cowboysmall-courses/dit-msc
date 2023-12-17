@@ -52,4 +52,3 @@ seta = fit1$coeff[1] + fit1$coeff[2] * sx
 sy   = exp(seta) / (1 + exp(seta))
 
 lines(sx, sy, col = 'green', lwd = 3)
-

@@ -272,45 +272,6 @@ values$coefficients[2, 4]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 data1 = data[day == 1, ]
 data2 = data[day == 2, ]
 data3 = data[day == 3, ]
@@ -360,11 +321,3 @@ points(time[day == 4], logcells[day == 4], pch = 20, col = 'yellow')
 abline(reg = fit, col = 'red', lwd = 2)
 
 curve(8.3540313 - 4.3804760*x + 0.8758162*x^2, from = 0, to = 3.5, col = 'darkgreen', lwd = 2, add = T)
-
-
-
-
-
-
-
-

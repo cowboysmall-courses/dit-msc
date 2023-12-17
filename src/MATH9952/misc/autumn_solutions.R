@@ -131,5 +131,3 @@ Lbeta = L %*% fit$coeff
 se = sqrt(L %*% vcov(fit) %*% t(L))
 exp(Lbeta) # hazard ratio
 exp(c(Lbeta - 1.96 * se, Lbeta + 1.96 * se)) # 95% CI for this hazard ratio
-
-

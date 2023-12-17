@@ -94,5 +94,3 @@ p.auc    = performance(p.scores, "auc")
 plot(p.perf, col = "blue", lwd = 2, xlab = "1 - Specificity (FPR)", ylab = "Sensitivity (TPR)")
 abline(a = 0, b = 1, col = "red", lty = 3, lwd = 2)
 text(0.1, 1, round(p.auc@y.values[[1]], 3), col = "red")
-
-
