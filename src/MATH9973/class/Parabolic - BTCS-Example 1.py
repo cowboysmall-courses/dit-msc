@@ -6,13 +6,13 @@
 # $$ \tau \frac{\partial}{\partial t} = \frac{1}{16}\frac{\partial^2 u}{\partial x^2}$$
 # ## Initial Condition
 # $$ u(x,0)=2\sin(2\pi x) $$
-# 
+#
 # ## Boundary Condition
 # $$ u(0,t)=0,  u(1,t)=0 $$
-# 
+#
 # ## The Difference Equation
 # $$ w[k+1,i] = w[k,i] + \frac{1}{16}\frac{k}{h^2}(w[k,i+1]-2w[k,i]+w[k,i-1])$$
-# 
+#
 
 
 

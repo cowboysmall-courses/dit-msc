@@ -7,16 +7,16 @@
 # ## Initial Condition
 # $$ u(x,0)=2x, \ \ 0 \leq x \leq \frac{1}{2} $$
 # $$ u(x,0)=2(1-x), \ \ \frac{1}{2}  \leq x \leq 1 $$
-# 
+#
 # ## Boundary Condition
 # $$ u(0,t)=0,  u(1,t)=0 $$
-# 
+#
 # ## The Explicit Forward Time Centered Space (FTCS) Difference Equation
 # $$ w[i,j+1] = w[i,j+1] +\frac{k}{h^2}(w[i+1,j]-2w[i,j]+w[i-1,j])$$
 # $$ w[i,j+1]=rw[i-1,j]+(1-2r)w[i,j]+rw[i+1,j]$$
-# 
+#
 # where $r=\frac{k}{h^2}$
-# 
+#
 
 
 
@@ -74,7 +74,6 @@ for i in range(0, N - 2):
 
 
 
-
 # %%
 
 fig = plt.figure(figsize = (8, 4))
@@ -89,9 +88,7 @@ clb = plt.colorbar()
 clb.set_label('Matrix value')
 clb.set_clim((-1, 1))
 
-
 plt.show()
-
 
 
 

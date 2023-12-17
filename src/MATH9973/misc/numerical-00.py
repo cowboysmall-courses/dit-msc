@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -12,11 +13,10 @@ y[0] = 1
 x[0] = 0
 s[0] = 1
 
-for i in range (1,102):
-    y[i] = y[i - 1] + (dx * t * y[i - 1] * x[i - 1] * x[i - 1]) # Numerical Solution
-    x[i] = x[i - 1] + dx # x
+for i in range(1, 102):
+    y[i] = y[i - 1] + (dx * t * y[i - 1] * x[i - 1] * x[i - 1])
+    x[i] = x[i - 1] + dx
 
 fig = plt.figure(figsize = (8, 4))
 
 plt.plot(x, y, label = 'Numerical Solution', color = 'red')
-# plt.legend(loc = 'best')

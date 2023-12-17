@@ -1,3 +1,4 @@
+
 import numpy as np
 import math
 import matplotlib.pyplot as plt
@@ -5,7 +6,7 @@ import matplotlib.pyplot as plt
 
 x_N = 10
 dx  = 0.01
-N   = int(x_N/dx)
+N   = int(x_N / dx)
 
 x     = np.zeros(N)
 n_sol = np.zeros(N)
