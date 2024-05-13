@@ -89,14 +89,15 @@ for k in range(1, time_iteration + 1):
 
 
 # %%
-
-print(w[:, 1])
 print(A)
 print(B)
+
+print(w[:, 1])
 print(w[:, 2])
 print(w[:, 3])
 print(w[:, 4])
 print(w[:, 5])
+
 print(time)
 
 
@@ -109,7 +110,10 @@ plt.plot(w)
 plt.xlabel('x')
 plt.ylabel('w')
 
+plt.show()
 
+
+# %%
 fig = plt.figure()
 
 plt.imshow(w.transpose())

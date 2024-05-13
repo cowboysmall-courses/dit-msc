@@ -102,9 +102,9 @@ for k in range(1, time_iteration + 1):
 
 
 # %%
+print(A)
 
 print(w[:, 1])
-print(A)
 print(w[:, 2])
 print(w[:, 3])
 print(w[:, 4])
@@ -120,8 +120,11 @@ plt.plot(w)
 plt.xlabel('x')
 plt.ylabel('w')
 
+plt.show()
 
-fig = plt.figure()
+
+# %%
+fig = plt.figure(figsize = (8, 4))
 
 plt.imshow(w.transpose())
 plt.xticks(np.arange(len(x)), x)

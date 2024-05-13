@@ -114,6 +114,10 @@ plt.plot(w)
 plt.xlabel('x')
 plt.ylabel('w')
 
+plt.show()
+
+
+# %%
 
 fig = plt.figure()
 
@@ -127,3 +131,5 @@ clb = plt.colorbar()
 clb.set_label('w')
 
 plt.show()
+
+# %%

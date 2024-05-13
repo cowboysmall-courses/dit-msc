@@ -1,31 +1,33 @@
 
+# %%
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 
-
+# %%
 x_N = 10
 dx  = 0.01
 N   = int(x_N / dx)
 
+# %%
 tau = 0.5
 
+# %%
 x     = np.zeros(N)
 n_sol = np.zeros(N)
 a_sol = np.zeros(N)
-
 
 x[0]     = 0
 n_sol[0] = 1.0
 a_sol[0] = 1.0
 
-
+# %%
 for i in range(1, N):
     x[i]     = x[i - 1] + dx
     n_sol[i] = n_sol[i - 1] + (dx * tau * n_sol[i - 1])
     a_sol[i] = math.exp(tau * x[i])
 
-
+# %%
 fig = plt.figure(figsize = (8, 4))
 
 ax  = fig.add_subplot(1, 3, 1)
